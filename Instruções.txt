@@ -1,0 +1,67 @@
+-- Arquitetura e Organização de Computadores
+-- Arquivo: instruções.txt
+-- Anderson Cottica
+-- Erik Ryuichi Yamamoto
+-- Data entrega: 26/10/17
+
+---------------------------------
+Instruções a serem implementadas:
+---------------------------------
+
+1 -  clk - clock
+2 -  rst - reset
+3 -  estado_s0 		-- para máquina de estados
+4 -  estado_s1 
+5 -  estado_s2 
+6 -  mov_s 		-- habilita a intrução MOV
+7 -  add_s 		-- habilita a intrução ADD
+8 -  ld_s 		-- habilita a instrução LD
+9 -  st_s 		-- habilita a intrução ST
+10 - reg1 ~ reg6 	-- registradores
+11 - pc_s 		-- saida do PC	
+12 - reg_dest_s 	-- registrador destino
+13 - reg_fonte_s 	-- registrador fonte
+	
+
+------
+OPCODE:
+------
+
+--TIPO R:
+
+MOV const, Rd	 	-- 0100 CCCCCCCC X DDD
+MOV Rs, Rd 	 	-- 0100 SSS 00000 Y DDD
+ADD const, Rd 	 	-- 0101 CCCCCCCC  X DDD
+ADD Rs, Rd	 	-- 0101 SSS 00000 Y DDD
+SUB const, Rd	 	-- 1000 CCCCCCCC  X DDD
+SUB Rs, Rd 	 	-- 1000 SSS 00000 Y DDD
+CMP  const, Rd	 	-- 1001 CCCCCCCC  X DDD 
+CMP  Rs, Rd	 	-- 1001 SSS 00000 Y DDD
+ST   Rs, @Rd	 	-- 1100 SSS 00000 Y DDD  
+LD   Rs, @Rd	 	-- 1101 SSS 00000 Y DDD 
+
+--TIPO J:
+
+JMP endereço 	 	-- 001111 EEEEEEEEEE
+
+NOP		 	-- 0000000000000000
+
+--=========================================================
+
+OBS.:
+C - valor da constante em binário
+S - Valor do registrador fonte em binário
+D - Valor do registrador de destino em binário
+X - Bit indicativo (1) de fonte. A fonte é uma constante dada pelos proximos 7 bits;
+Y - Bit indicativo (0) de fonte. A fonte é um registrador dado pelos bits (11 downto 9). Os bits (8 downto 4) sao zerados.
+
+CMP - compara registrador de destino com uma constante ou 
+	com um registrador fonte e seta flag para o caso em que 
+	o Registrador de destino for maior ou igual, ou zera quando menor.
+
+JMP - pula incondicionalmente para o endereço solicitado
+
+ST  - carrega o valor de registrador fonte no endereço dado pelo registrador de destino
+
+LD  - carrega o valor no endereço dado do registrador de destino, no registrador fonte
+
