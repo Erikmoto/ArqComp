@@ -1,10 +1,25 @@
-v 3
-file . "rom_tb.vhd" "20171020014834.000" "20171026140518.623":
-  entity rom_tb at 7( 147) + 0 on 15;
-  architecture a_rom_tb of rom_tb at 14( 254) + 0 on 16;
-file . "maq_estados.vhd" "20171026153500.000" "20171026133503.535":
-  entity maq_estados at 7( 153) + 0 on 11;
-  architecture a_maq_estados of maq_estados at 18( 350) + 0 on 12;
-file . "rom.vhd" "20171026160326.000" "20171026140511.382":
-  entity rom at 7( 145) + 0 on 13;
-  architecture a_rom of rom at 18( 363) + 0 on 14;
+v 4
+file . "rom.vhd" "13885a2deff32f1b3f41e6a168259db7f321d368" "20171026202526.769":
+  entity rom at 7( 145) + 0 on 123;
+  architecture a_rom of rom at 19( 365) + 0 on 124;
+file . "pc_rom.vhd" "cc184a005f53f1c2b195c88e731dd48548a0a2f5" "20171026230152.529":
+  entity pc_rom at 7( 150) + 0 on 133;
+  architecture a_pc_rom of pc_rom at 18( 343) + 0 on 134;
+file . "super_pc.vhd" "b48fe9eee7c47c9a9dfc216342edcdde0f8ae414" "20171026202444.047":
+  entity super_pc at 7( 144) + 0 on 115;
+  architecture a_super_pc of super_pc at 20( 387) + 0 on 116;
+file . "pc.vhd" "2e8e4c04a9f3a4a4f1d10b9d50a081749bf2f16a" "20171026202442.081":
+  entity pc at 7( 144) + 0 on 111;
+  architecture a_pc of pc at 21( 419) + 0 on 112;
+file . "proto_uc.vhd" "bf904785b7470ddde2d9aacffda6a5d716201a1c" "20171026202443.065":
+  entity proto_uc at 7( 148) + 0 on 113;
+  architecture a_proto_uc of proto_uc at 18( 364) + 0 on 114;
+file . "super_pc_tb.vhd" "c770f988509e4eb3799234051b496e6b17cc753b" "20171026202449.091":
+  entity super_pc_tb at 7( 147) + 0 on 117;
+  architecture a_super_pc_tb of super_pc_tb at 14( 252) + 0 on 118;
+file . "pc_rom_tb.vhd" "bef7f20397c5f5119f7fff4bb37baa84475e0293" "20171026230201.842":
+  entity pc_rom_tb at 7( 151) + 0 on 135;
+  architecture a_pc_rom_tb of pc_rom_tb at 14( 254) + 0 on 136;
+file . "maquina_est.vhd" "a8712437dd2be67a998928a0a7499ff213efac35" "20171026202544.516":
+  entity maquina_est at 7( 153) + 0 on 125;
+  architecture a_maquina_est of maquina_est at 17( 329) + 0 on 126;

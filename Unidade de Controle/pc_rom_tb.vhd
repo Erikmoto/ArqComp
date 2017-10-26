@@ -15,15 +15,15 @@ architecture a_pc_rom_tb of pc_rom_tb is
 	component pc_rom
     port (
 			top_out	  : out unsigned (14 downto 0);
-      clk, rst, pc_en : std_logic
+      clk, rst : std_logic
     );
 	end component;
 
 	signal top_out  : unsigned (14 downto 0);
-  signal clk, rst, pc_en  : std_logic;
+  signal clk, rst  : std_logic;
 
 	begin
-	uut:pc_rom port map(top_out => top_out, clk => clk, rst => rst, pc_en => pc_en);
+	uut:pc_rom port map(top_out => top_out, clk => clk, rst => rst);
 
 	process
   	begin
@@ -43,7 +43,6 @@ architecture a_pc_rom_tb of pc_rom_tb is
 
 	process
   	begin
-      pc_en <= '1';
 			wait;
 	end process;
 end architecture;

@@ -16,11 +16,11 @@ architecture a_super_pc_tb of super_pc_tb is
 		port (
 			clk 		: in std_logic;
 			rst 		: in std_logic;
-			pc_en 	: in std_logic
+			pc_en 	: in std_logic;
+			super_pc_out : out unsigned(15 downto 0)
 		);
 	end component;
 
-	signal dado_in, dado_out : unsigned (15 downto 0);
   signal clk, rst, pc_en  : std_logic;
 
 	begin

@@ -32,4 +32,6 @@ architecture a_pc of pc is
 						end if;
 				end if;
 		end process;
+
+		dado_out <= registro;
 end architecture;
