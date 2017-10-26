@@ -13,8 +13,8 @@ entity pc is
 		clk 		: in std_logic;
 		rst 		: in std_logic;
 		pc_en 		: in std_logic;
-		pc_in		: inout unsigned(15 downto 0);
-		pc_out		: out unsigned(15 downto 0)
+		dado_in		: inout unsigned(15 downto 0);
+		dado_out		: out unsigned(15 downto 0)
 	);
 end entity;
 
@@ -33,8 +33,8 @@ architecture a_pc of pc is
 begin
 	proto: proto_uc port map(dado_in => registro, const_in => proto_const, dado_out => proto_out);
 
-	pc_in <= proto_out;
-	pc_out <= registro;
+	dado_in <= proto_out;
+	dado_out <= registro;
 
 	process (clk,rst,pc_en)
 		begin
@@ -42,7 +42,7 @@ begin
 				registro <= "0000000000000000";
 				elsif pc_en = '1' then
 					if rising_edge(clk) then
-						registro <= pc_in;
+						registro <= dado_in;
 					end if;
 			end if;
 	end process;

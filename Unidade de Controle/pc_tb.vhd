@@ -17,16 +17,16 @@ architecture a_pc_tb of pc_tb is
 			clk 		: in std_logic;
 			rst 		: in std_logic;
 			pc_en 		: in std_logic;
-			pc_in		: inout unsigned(15 downto 0);
-			pc_out		: inout unsigned(15 downto 0)
+			dado_in		: inout unsigned(15 downto 0);
+			dado_out		: out unsigned(15 downto 0)
 		);
 	end component;
 
-	signal pc_in, pc_out : unsigned (15 downto 0);
+	signal dado_in, dado_out : unsigned (15 downto 0);
   signal clk, rst, pc_en  : std_logic;
 
 	begin
-	uut:pc port map(pc_in => pc_in, pc_out => pc_out, clk => clk, rst => rst, pc_en => pc_en);
+	uut:pc port map(dado_in => dado_in, dado_out => dado_out, clk => clk, rst => rst, pc_en => pc_en);
 
 	process
   	begin
@@ -47,18 +47,6 @@ architecture a_pc_tb of pc_tb is
 	process
   	begin
       pc_en <= '1';
-  		--pc_in <= "0000000000000000";
-  		--wait for 100 ns;
-
-			--pc_in <= "0000100000000000";
-			--wait for 100 ns;
-
-			--pc_in <= "0000000001110000";
-			--wait for 100 ns;
-
-			--pc_ena <= '0';
-			--pc_in <= "1111111111111111";
-			--wait for 100 ns;
 			wait;
 	end process;
 end architecture;
