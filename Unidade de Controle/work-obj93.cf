@@ -1,19 +1,10 @@
-v 4
-file . "pc_rom.vhd" "376ff46da65f74adecf6786fb1a5317223480e19" "20171026020638.717":
-  entity pc_rom at 7( 150) + 0 on 85;
-  architecture a_pc_rom of pc_rom at 18( 350) + 0 on 86;
-file . "pc.vhd" "ba6d3c8bdb87b55ba84d88640ada07568c215f73" "20171026020210.837":
-  entity pc at 7( 144) + 0 on 73;
-  architecture a_pc of pc at 21( 422) + 0 on 74;
-file . "proto_uc.vhd" "bf904785b7470ddde2d9aacffda6a5d716201a1c" "20171026020212.992":
-  entity proto_uc at 7( 148) + 0 on 77;
-  architecture a_proto_uc of proto_uc at 18( 364) + 0 on 78;
-file . "pc_tb.vhd" "da8b301756612f8a12e851063bb3f39063571f51" "20171026020211.969":
-  entity pc_tb at 7( 147) + 0 on 75;
-  architecture a_pc_tb of pc_tb at 14( 246) + 0 on 76;
-file . "pc_rom_tb.vhd" "a150db6f293b33fb62758497fc288188cdd7abe5" "20171026020640.341":
-  entity pc_rom_tb at 7( 151) + 0 on 87;
-  architecture a_pc_rom_tb of pc_rom_tb at 14( 254) + 0 on 88;
-file . "rom.vhd" "87136874ce09aaf3d507a9cbd66a5c703b6bcade" "20171026020646.861":
-  entity rom at 7( 145) + 0 on 89;
-  architecture a_rom of rom at 18( 363) + 0 on 90;
+v 3
+file . "rom_tb.vhd" "20171020014834.000" "20171026140518.623":
+  entity rom_tb at 7( 147) + 0 on 15;
+  architecture a_rom_tb of rom_tb at 14( 254) + 0 on 16;
+file . "maq_estados.vhd" "20171026153500.000" "20171026133503.535":
+  entity maq_estados at 7( 153) + 0 on 11;
+  architecture a_maq_estados of maq_estados at 18( 350) + 0 on 12;
+file . "rom.vhd" "20171026160326.000" "20171026140511.382":
+  entity rom at 7( 145) + 0 on 13;
+  architecture a_rom of rom at 18( 363) + 0 on 14;

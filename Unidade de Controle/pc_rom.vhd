@@ -18,6 +18,7 @@ end entity;
 architecture a_pc_rom of pc_rom is
 
 	signal pc_in, pc_out : unsigned (15 downto 0);
+	signal estado : std_logic;
 
 	component pc is
     port (
@@ -37,7 +38,20 @@ architecture a_pc_rom of pc_rom is
 		);
 	end component;
 
+	component maquina_est is
+		port(
+			clk, rst : in std_logic;
+			est_o : out std_logic
+		);
+	end component;
+
 	begin
   	pc_1: pc port map (clk => clk, rst => rst, pc_en => pc_en, dado_in => pc_in, dado_out => pc_out);
 		rom_1: rom port map (clk => clk, endereco => pc_out, dado => top_out);
+		maq_est: maquina_est port map (clk => clk, rst => rst, est_o => estado);
+
+		pc_in <= pc_in when estado = '0' else
+							pc_out when estado = '1' else
+							"0000000000000000";
+
 end architecture;

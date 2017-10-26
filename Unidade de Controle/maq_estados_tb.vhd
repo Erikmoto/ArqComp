@@ -11,21 +11,20 @@ use ieee.numeric_std.all;
 entity maquina_est_tb is
 end entity;
 
-architecture a_maquina_est_tb of maquina_est_tb is
-	component maquina_est is
+architecture a_maq_estados_tb of maq_estados_tb is
+	component maq_estados is
 	port (	clk		: in std_logic;
 			rst		: in std_logic;
-			estado	: out unsigned(1 downto 0);
-			est_0, est_1, est_2	: out std_logic
+			estado	: out unsigned(1 downto 0)
+			
 		);
 	end component;
 
 	signal clk,rst	: std_logic;
 	signal estado	:unsigned(1 downto 0);
-	signal est_0, est_1, est_2	: std_logic;
-
+	
 begin
-	uut: maquina_est port map (clk=>clk, estado=>estado, rst=>rst, est_0=>est_0, est_1=>est_1, est_2=>est_2);
+	uut: maq_estados port map (clk=>clk, estado=>estado, rst=>rst);
 
 		process 			-- sinal de clock
 			begin

@@ -1,0 +1,5 @@
+1 - Estudo do Microprocessador 
+2 - Instruções implementadas
+3 - MSP_430_datasheet
+4 - link intruções: https://en.wikipedia.org/wiki/TI_MSP430
+5 - arquivos .vhdl
