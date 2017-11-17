@@ -2,7 +2,7 @@
 -- Arquivo: proto_UC.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 19/10/17
+-- Data entrega: 09/11/17
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -17,15 +17,23 @@ end entity;
 
 architecture a_pc_rom of pc_rom is
 
-	signal pc_out : unsigned (15 downto 0);
+	signal pc_in, pc_out, proto_out : unsigned (15 downto 0);
 	signal pc_en, estado : std_logic;
 
-	component super_pc is
-    port (
+	component pc is
+		port (
 			clk 		: in std_logic;
-	    rst 		: in std_logic;
-	    pc_en 	: in std_logic;
-			super_pc_out : out unsigned(15 downto 0)
+			rst 		: in std_logic;
+			pc_en 		: in std_logic;
+			dado_in		: in unsigned(15 downto 0);
+			dado_out	: out unsigned(15 downto 0)
+		);
+	end component;
+
+	component proto_uc is
+		port (
+			dado_in : in unsigned (15 downto 0);
+			dado_out	  : out unsigned (15 downto 0)
 		);
 	end component;
 
@@ -45,12 +53,12 @@ architecture a_pc_rom of pc_rom is
 	end component;
 
 	begin
-  	pc_1: super_pc port map (clk => clk, rst => rst, pc_en => pc_en, super_pc_out => pc_out);
+		pc1: pc port map(clk => clk, rst => rst, pc_en => pc_en, dado_in => pc_in, dado_out => pc_out);
+		proto: proto_uc port map(dado_in => pc_out, dado_out => proto_out);
 		rom_1: rom port map (clk => clk, endereco => pc_out, dado => top_out);
 		maq_est: maquina_est port map (clk => clk, rst => rst, est_o => estado);
 
-		pc_en <= '0' when estado = '0' else
-							'1' when estado = '1' else
+		pc_en <= '1' when estado = '1' else
 							'0';
 
 end architecture;

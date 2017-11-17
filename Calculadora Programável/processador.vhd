@@ -1,3 +1,10 @@
+-- Arquitetura e Organização de Computadores
+-- Arquivo: processador.vhd
+-- Anderson Cottica
+-- Erik Ryuichi Yamamoto
+-- Data entrega: 09/11/17
+
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

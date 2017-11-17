@@ -2,7 +2,7 @@
 -- Arquivo: pc_rom_tb.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 19/10/17
+-- Data entrega: 09/11/17
 
 library ieee;
 use ieee.std_logic_1164.all;

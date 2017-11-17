@@ -10,18 +10,17 @@ use ieee.numeric_std.all;
 
 entity uc is
 	port(
-			instruction: in unsigned(15 downto 0);
-			mov_s: 		out std_logic;
-			add_s: 		out std_logic;
-			sub_s: 		out std_logic;
-			cmp_s:		out std_logic;
-			st_s:		out std_logic;
-			ld_s:		out std_logic;
-			reg_fonte_s:out unsigned (2 downto 0);
-			reg_dest_s:	out unsigned (2 downto 0)
-
-
-		);
+		instruction: in unsigned(14 downto 0);
+		jump_s: out std_logic;
+		mov_s: 		out std_logic;
+		add_s: 		out std_logic;
+		sub_s: 		out std_logic;
+		cmp_s:		out std_logic;
+		st_s:		out std_logic;
+		ld_s:		out std_logic;
+		reg_fonte_s:out unsigned (2 downto 0);
+		reg_dest_s:	out unsigned (2 downto 0)
+	);
 end entity;
 
 
@@ -39,10 +38,10 @@ architecture a_uc of uc is
 	begin
 
 		--opcode reg nos 4 MSB
-		opc_r <= instruction(15 downto 12);
+		opc_r <= instruction(14 downto 11);
 
 		--opcode tipo J nos 6 MSB
-		opc_j <= instruction(15 downto 10) ;
+		opc_j <= instruction(14 downto 9) ;
 
 		--MOV
 		mov_m <= '1' when opc_r = "0100" else '0';

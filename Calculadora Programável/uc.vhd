@@ -1,8 +1,8 @@
 -- Arquitetura e Organização de Computadores
--- Arquivo: decoder.vhd
+-- Arquivo: uc.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 26/10/17
+-- Data entrega: 
 
 library ieee;
 use ieee.std_logic_1164.all;

@@ -2,7 +2,7 @@
 -- Arquivo: top16bits_tb.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 05/10/2017
+-- Data entrega: 
 
 library ieee;
 use ieee.std_logic_1164.all;
