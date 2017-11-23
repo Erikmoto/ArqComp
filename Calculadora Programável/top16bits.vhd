@@ -9,12 +9,10 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity top16bits is
-	port (	
-		top_in									: in unsigned (15 downto 0);
-		selec_reg1, selec_reg2, selec_esc : unsigned (2 downto 0);
-		ula_sel										  			: unsigned (1 downto 0);
-		rstIn, clkIn, we_In, mux_sel			: in std_logic;
-		debug 														: out unsigned (15 downto 0)
+	port (	top_in									: in unsigned (15 downto 0);
+					selec_reg1, selec_reg2, selec_esc : unsigned (2 downto 0);
+					ula_sel										  			: unsigned (1 downto 0);
+					rstIn, clkIn, we_In, mux_sel			: in std_logic
 	);
 end entity;
 
@@ -69,7 +67,5 @@ architecture a_top16bits of top16bits is
 							);
 
 	mux_banco_ula: mux_16bits port map ( sel0 => mux_sel, entr0 => data_out2, entr1 => top_in, saida => mux_out);
-
-
 
 end architecture;

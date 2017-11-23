@@ -1,8 +1,8 @@
 -- Arquitetura e Organização de Computadores
--- Arquivo: ula_16bits.vhd
+-- Arquivo: mux_16bits_tb.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 
+-- Data entrega: 21/09/17
 
 library ieee;
 use ieee.std_logic_1164.all;

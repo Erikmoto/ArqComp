@@ -16,6 +16,7 @@ entity uc is
 		add_s: 		out std_logic;
 		sub_s: 		out std_logic;
 		cmp_s:		out std_logic;
+		blr_s:		out std_logic;
 		st_s:		out std_logic;
 		ld_s:		out std_logic;
 		reg_fonte_s:out unsigned (2 downto 0);
@@ -32,6 +33,7 @@ architecture a_uc of uc is
 	signal add_m: 	std_logic;
 	signal sub_m: 	std_logic;
 	signal cmp_m: 	std_logic;
+	signal blr_m:	std_logic;
 	signal st_m:	std_logic;
 	signal ld_m:	std_logic;
 
@@ -69,8 +71,13 @@ architecture a_uc of uc is
 
 		--JMP
 		jump_m <= '1' when opc_j="001111" else '0';
-		jump_s<=jump_m;
+		jump_s <= jump_m;
 
+		--BRL
+		blr_m <= '1' when opc_j="001101" else '0';
+		blr_s <= blr_m;
+		
+		
 		--ligações
 
 end architecture;

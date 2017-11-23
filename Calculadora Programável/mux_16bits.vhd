@@ -2,7 +2,7 @@
 -- Arquivo: mux_16bits.vhd
 -- Anderson Cottica
 -- Erik R. Yamamoto
--- Data: 
+-- Data 15/09/17
 
 
 library ieee;

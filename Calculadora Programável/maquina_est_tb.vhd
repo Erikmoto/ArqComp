@@ -2,7 +2,7 @@
 -- Arquivo: maquina_est_tb.vhd
 -- Anderson Cottica
 -- Erik Ryuichi Yamamoto
--- Data entrega: 09/11/17
+-- Data entrega: 19/10/17
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -11,20 +11,16 @@ use ieee.numeric_std.all;
 entity maquina_est_tb is
 end entity;
 
-architecture a_maq_estados_tb of maq_estados_tb is
-	component maq_estados is
-	port (	clk		: in std_logic;
-			rst		: in std_logic;
-			estado	: out unsigned(1 downto 0)
-			
-		);
+architecture a_maquina_est_tb of maquina_est_tb is
+	component maquina_est is
+		port( clk, rst : in std_logic;
+					est_o : out std_logic);
 	end component;
 
-	signal clk,rst	: std_logic;
-	signal estado	:unsigned(1 downto 0);
-	
+	signal clk, rst, est_o : std_logic;
+
 begin
-	uut: maq_estados port map (clk=>clk, estado=>estado, rst=>rst);
+	uut: maquina_est port map (clk=>clk, rst=>rst, est_o=>est_o);
 
 		process 			-- sinal de clock
 			begin

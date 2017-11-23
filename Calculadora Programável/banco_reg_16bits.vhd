@@ -18,7 +18,6 @@ entity banco_reg_16bits is
 			data_in	:in unsigned (15 downto 0); 	--dados que serão escritos no registrador
 			data_out1 	:out unsigned (15 downto 0);
 			data_out2 	:out unsigned (15 downto 0)
-
 		);
 
 end entity;

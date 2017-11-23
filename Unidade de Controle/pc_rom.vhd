@@ -17,7 +17,7 @@ end entity;
 
 architecture a_pc_rom of pc_rom is
 
-	signal pc_in, pc_out : unsigned (15 downto 0);
+	signal pc_in, pc_out, destino_jump : unsigned (15 downto 0);
 	signal estado, jump_en, mov_en, add_en, sub_en, cmp_en, st_en, ld_en : std_logic;
 	signal reg_fonte, reg_dest : unsigned (2 downto 0);
 	signal instrucao : unsigned (14 downto 0);
@@ -69,10 +69,11 @@ architecture a_pc_rom of pc_rom is
 		uc1: uc port map(instruction => instrucao, jump_s => jump_en, mov_s => mov_en, add_s => add_en, sub_s => sub_en, cmp_s => cmp_en,
 		 									st_s => st_en, ld_s => ld_en, reg_fonte_s => reg_fonte, reg_dest_s => reg_dest);
 
-		--instrucao <= top_out;
+		top_out <= instrucao;
+		destino_jump <= "0000000" & instrucao(8 downto 0);
 
 		pc_in <= pc_out + "0000000000000001" when estado = '1' and jump_en = '0' else
-							pc_in + ("000000" & instrucao(8 downto 0)) when estado = '1' and jump_en = '1' else
+							destino_jump when estado = '1' and jump_en = '1' else
 							pc_in when estado = '0' else
 							"0000000000000000";
 
