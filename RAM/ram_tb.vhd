@@ -26,7 +26,7 @@ architecture a_ram_tb of ram_tb is
 	
 begin
 	uut: ram port map( clk=>clk, wr_en=>wr_en, endereco=>endereco, dado_in=>dado_in, dado_out=>dado_out );
-	process -- sinal de clock
+	process 
 		begin
 			clk <= '0';
 			wait for 50 ns;
@@ -34,23 +34,23 @@ begin
 			wait for 50 ns;
 	end process;
 	
-		process 								-- sinais de casos de teste
+		process 								
 		begin
 			wr_en <= '0';						-- teste de enable = 0
 			endereco <= "0000000000";
 			wait for 200 ns;
 			
-			wr_en <= '1';			 			-- guarda 7 no endereco 1
+			wr_en <= '1';			 			-- guardar 6 no endereco 1
 			endereco <= "0000000001";
-			dado_in <= "0000000000000011";
+			dado_in <= "0000000000000010";
 			wait for 200 ns;
 			
-			wr_en <= '1';						-- guarda 15 no endereco 2
+			wr_en <= '1';						
 			endereco <= "0000000010";
 			dado_in <= "0000000000001111";
 			wait for 200 ns;
 			
-			wr_en <= '0';						-- testa se ele escreve quando o wr_en = 0
+			wr_en <= '0';						-- testa se ele escreve 
 			endereco <= "0000000001";  
 			dado_in <= "1000000000000000";
 			wait for 200 ns;

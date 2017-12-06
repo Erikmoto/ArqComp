@@ -8,14 +8,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity pc_rom_tb is
+entity processador_tb is
 end;
 
-architecture a_pc_rom_tb of pc_rom_tb is
-	component pc_rom
-    port (
-			top_out	  : out unsigned (14 downto 0);
-      clk, rst, pc_en : std_logic
+architecture a_processador_tb of processador_tb is
+	component processador
+    port(
+      top_out	  : out unsigned (14 downto 0);
+      clk, rst, pc_en : in std_logic
     );
 	end component;
 
@@ -23,7 +23,7 @@ architecture a_pc_rom_tb of pc_rom_tb is
   signal clk, rst, pc_en  : std_logic;
 
 	begin
-	uut:pc_rom port map(top_out => top_out, clk => clk, rst => rst, pc_en => pc_en);
+	uut:processador port map(top_out => top_out, clk => clk, rst => rst, pc_en => pc_en);
 
 	process
   	begin

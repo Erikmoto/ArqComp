@@ -12,6 +12,7 @@ entity uc is
 	port(
 		uc_en: in std_logic;
 		instruction: in unsigned(14 downto 0);
+		nop_s: out std_logic;
 		jump_s: out std_logic;
 		mov_s: 		out std_logic;
 		add_s: 		out std_logic;
@@ -21,7 +22,9 @@ entity uc is
 		st_s:		out std_logic;
 		ld_s:		out std_logic;
 		reg_fonte_s:out unsigned (2 downto 0);
-		reg_dest_s:	out unsigned (2 downto 0)
+		reg_dest_s:	out unsigned (2 downto 0);
+		flag_s: out std_logic;
+		destino_jump_s: out unsigned(15 downto 0)
 	);
 end entity;
 
@@ -29,6 +32,7 @@ end entity;
 architecture a_uc of uc is
 	signal opc_r: 	unsigned (3 downto 0);
 	signal opc_j: 	unsigned (5 downto 0);
+	signal nop_m: std_logic;
 	signal jump_m: 	std_logic;
 	signal mov_m: 	std_logic;
 	signal add_m: 	std_logic;
@@ -37,6 +41,10 @@ architecture a_uc of uc is
 	signal blr_m:	std_logic;
 	signal st_m:	std_logic;
 	signal ld_m:	std_logic;
+	signal reg_fonte: std_logic;
+	signal reg_dest: std_logic;
+	signal flag: std_logic;
+	signal destino_jump: unsigned(15 downto 0);
 
 	begin
 
@@ -72,8 +80,16 @@ architecture a_uc of uc is
 
 		--JMP
 		jump_m <= '1' when opc_j="001111" and uc_en ='1' else '0';
-		jump_s<=jump_m;
+		jump_s <= jump_m;
 
-		--ligações
+		--NOP
+		nop_m <= '1' when instruction = "00000000000000" else '0';
+		nop_s <= nop_m;
 
+		flag <= instruction(3) when uc_en = '1' else '0';
+
+		reg_fonte <= instruction(10 downto 8) when uc_en = '1' else "000";
+		reg_dest <= instrucao(2 downto 0) when uc_en = '1' else "000";
+
+		destino_jump <= "0000000" & instrucao(8 downto 0);
 end architecture;
