@@ -44,7 +44,7 @@ architecture a_rom of rom is
 				22 => "1100000000000010", 		-- ST R0,R2		--(endereço, dado) grava 0 no endereço 
 				23 => "0000000000000000",		-- NOP
 				24 => "0000000000000000",		-- NOP
-				25 => "1001100000000010", 		-- CMP R4,R2 		-- se R2 for maior ou igual,seta a flag  
+				25 => "1001100000000010", 		-- CMP R4,R2 		-- seta a flag caso R2 for maior ou igual  
 				26 => "0011011111110111", 		-- BLR -7 			-- ZERA_DADO
 				27 => "0000000000000000",		-- NOP
 --			FIM DE ZERAR AS POSICOES PARA UM VALOR 
