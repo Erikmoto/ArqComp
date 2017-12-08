@@ -12,16 +12,17 @@ use ieee.numeric_std.all;
 entity processador is
 	port(
 		top_out	  : out unsigned (14 downto 0);
-		clk, rst, pc_en : in std_logic
+		clk, rst, pc_en : in std_logic;
+		erro: out std_logic
 	);
 end entity;
 
 architecture a_processador of processador is
-	signal mux_sel, uc_en, nop_en, jump_en, mov_en, add_en, sub_en, cmp_en, blr_en, st_en, ld_en, compara, wr_en, flag: std_logic;
+	signal mux_sel, uc_en, nop_en, jump_en, mov_en, add_en, sub_en, cmp_en, blr_en, st_en, ld_en, compara, wr_en, flag, erro_op: std_logic;
 	signal estado, ula_sel : unsigned (1 downto 0);
-	signal reg_fonte, reg_dest, selec_esc : unsigned (2 downto 0);
+	signal selec_reg1, selec_reg2, reg_fonte, reg_dest, selec_esc : unsigned (2 downto 0);
 	signal instrucao, uc_in : unsigned (14 downto 0);
-	signal pc_in, pc_out, destino_jump, ula_out, soma, subtrai, select_maior, modulo_adicao, reg_out1, reg_out2, mux_in, mux_out : unsigned (15 downto 0);
+	signal pc_in, pc_out, destino_jump, constante, ula_out, soma, subtrai, select_maior, modulo_adicao, reg_out1, reg_out2, mux_in, mux_out : unsigned (15 downto 0);
 
 	component pc is
 		port (
@@ -64,7 +65,9 @@ architecture a_processador of processador is
 			reg_fonte_s:out unsigned (2 downto 0);
 			reg_dest_s:	out unsigned (2 downto 0);
 			flag_s: out std_logic;
-			destino_jump_s: out unsigned(15 downto 0)
+			destino_jump_s: out unsigned(15 downto 0);
+			constante_s: out unsigned(15 downto 0);
+			erro_op_s: out std_logic
 		);
 	end component;
 
@@ -117,37 +120,38 @@ architecture a_processador of processador is
 		maq_est: maq_estados port map (clk => clk, rst => rst, estado => estado);
 
 		uc1: uc port map(uc_en => uc_en, instruction => uc_in, nop_s => nop_en, jump_s => jump_en, mov_s => mov_en, add_s => add_en, sub_s => sub_en, cmp_s => cmp_en,
-		 									blr_s => blr_en, st_s => st_en, ld_s => ld_en, reg_fonte_s => reg_fonte, reg_dest_s => reg_dest, flag_s => flag, destino_jump_s => destino_jump);
+		 									blr_s => blr_en, st_s => st_en, ld_s => ld_en, reg_fonte_s => reg_fonte, reg_dest_s => reg_dest,
+											flag_s => flag, destino_jump_s => destino_jump, constante_s => constante, erro_op_s => erro_op);
 
 		-- Entrada de dados do Banco é ligada na saída da ULA
 		banco_reg1: banco_reg_16bits port map (clk => clk, rst => rst, wr_en => wr_en,
-												selec_reg1 => reg_fonte, selec_reg2 => reg_dest, selec_esc => selec_esc,
+												selec_reg1 => selec_reg1, selec_reg2 => selec_reg2, selec_esc => selec_esc,
 												data_in => ula_out, data_out1 => reg_out1, data_out2 => reg_out2);
 
-		-- Uma entrada de dados da ULA é ligada na saída de dados do registrador fonte do Banco
+		-- Uma entrada de dados da ULA é ligada na saída de dados do registrador destino do Banco
 		-- A outra entrada de dados da ULA é ligada na saída do MUX
-		ula: ula_16bits port map (entr0 => reg_out1, entr1 => mux_out, compara => compara,
+		ula: ula_16bits port map (entr0 => reg_out2, entr1 => mux_out, compara => compara,
 									sel0 => ula_sel, soma => soma, subtrai => subtrai,
 									select_maior => select_maior, modulo_adicao => modulo_adicao,
 									saida => ula_out);
 
-		-- Uma entrada de dados do MUX é ligada na saída de dados do registrador de destino do Banco
+		-- Uma entrada de dados do MUX é ligada na saída de dados do registrador fonte do Banco
 		-- A outra entrada de dados do MUX é ligada na saída da ROM
-		mux_banco_ula: mux_16bits port map (sel0 => mux_sel, entr0 => reg_out2, entr1 => mux_in, saida => mux_out);
+		mux_banco_ula: mux_16bits port map (sel0 => mux_sel, entr0 => reg_out1, entr1 => mux_in, saida => mux_out);
 
 		--rever conexões ram
 		--ram1: ram port map (clk => clk, endereco => endereco, dado_in => dado_in, dado_out => dado_out, wr_en => wr_en);
-
 
 		-----------------------------------------------------------------------
 		-------------------------------- Fetch --------------------------------
 		-----------------------------------------------------------------------
 		-- Atualização do PC: adiciona 1 quando não é jump ou é nop, recebe o endereço de destino quando é jump
-		pc_in <= 	"0000000000000000" when rst = '1' else
-							destino_jump when estado = "00" and jump_en = '1' and flag = '1' else -- Jump incondicional
-							pc_out + destino_jump when estado = "00" and jump_en = '1' and flag = '0' else -- Branch
-							pc_out when estado /= "00" else
-							pc_out + "0000000000000001";
+		pc_in <= 	"0000000000000000" when estado = "00" and rst = '1' else
+							destino_jump when estado = "00" and jump_en = '1' else -- Jump incondicional
+							pc_out + destino_jump when estado = "00" and blr_en = '1' else -- Branch
+							pc_out + "0000000000000001" when estado = "00" and erro_op = '0' else pc_in;
+
+		erro <= erro_op; -- Serve para verificar opcodes inválidos e se algum tipo de instrução está ativo
 
 		------------------------------------------------------------------------
 		-------------------------------- Decode --------------------------------
@@ -161,17 +165,19 @@ architecture a_processador of processador is
 		-------------------------------- Execute --------------------------------
 		-------------------------------------------------------------------------
 		-- Entrada de dados do MUX para soma de constante
-		mux_in <= "000000000" & instrucao(10 downto 4) when estado = "10" else mux_in;
+		mux_in <= constante when estado = "10" else mux_in;
 
 		-- Seletor do MUX: Registro (Flag = 0) ou Constante (Flag = 1)
 		mux_sel <= flag when estado = "10" else mux_sel;
 
 		-- Seleção de operação da ULA
-		ula_sel <= "00" when estado = "10" and (add_en = '1' or mov_en = '1') else
+		ula_sel <= "00" when estado = "10" and (add_en or mov_en) = '1' else
 								"01" when estado = "10" and sub_en = '1' else ula_sel;
 
 		-- Seleção dos registradores fonte e destino
-		reg_fonte <= instrucao(10 downto 8) when estado = "10" else reg_fonte;
-		reg_dest <= instrucao(2 downto 0) when estado = "10" else reg_dest;
-		
+		selec_reg1 <= reg_fonte when estado = "10" else selec_reg1;
+		selec_reg2 <= reg_dest when estado = "10" else selec_reg2;
+
+		selec_esc <= reg_dest when estado = "10" else selec_esc;
+		wr_en <= '1' when estado = "10" and (mov_en or add_en or sub_en) = '1' else '0';
 end architecture;

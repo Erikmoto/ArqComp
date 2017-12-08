@@ -24,7 +24,9 @@ entity uc is
 		reg_fonte_s:out unsigned (2 downto 0);
 		reg_dest_s:	out unsigned (2 downto 0);
 		flag_s: out std_logic;
-		destino_jump_s: out unsigned(15 downto 0)
+		destino_jump_s: out unsigned(15 downto 0);
+		constante_s: out unsigned(15 downto 0);
+		erro_op_s: out std_logic
 	);
 end entity;
 
@@ -41,10 +43,12 @@ architecture a_uc of uc is
 	signal blr_m:	std_logic;
 	signal st_m:	std_logic;
 	signal ld_m:	std_logic;
-	signal reg_fonte: std_logic;
-	signal reg_dest: std_logic;
+	signal reg_fonte: unsigned(2 downto 0);
+	signal reg_dest: unsigned(2 downto 0);
 	signal flag: std_logic;
 	signal destino_jump: unsigned(15 downto 0);
+	signal constante: unsigned(15 downto 0);
+	signal erro_op: std_logic;
 
 	begin
 
@@ -79,17 +83,32 @@ architecture a_uc of uc is
 		ld_s <= ld_m;
 
 		--JMP
-		jump_m <= '1' when opc_j="001111" and uc_en ='1' else '0';
+		jump_m <= '1' when opc_j = "001111" and uc_en ='1' else '0';
 		jump_s <= jump_m;
+
+		--BLR
+		blr_m <= '1' when opc_j = "001101" and uc_en = '1' else '0';
+		blr_s <= blr_m;
 
 		--NOP
 		nop_m <= '1' when instruction = "00000000000000" else '0';
 		nop_s <= nop_m;
 
 		flag <= instruction(3) when uc_en = '1' else '0';
+		flag_s <= flag;
 
 		reg_fonte <= instruction(10 downto 8) when uc_en = '1' else "000";
-		reg_dest <= instrucao(2 downto 0) when uc_en = '1' else "000";
+		reg_fonte_s <= reg_fonte;
 
-		destino_jump <= "0000000" & instrucao(8 downto 0);
+		reg_dest <= instruction(2 downto 0) when uc_en = '1' else "000";
+		reg_dest_s <= reg_dest;
+
+		destino_jump <= "0000000" & instruction(8 downto 0) when uc_en = '1' else "0000000000000000";
+		destino_jump_s <= destino_jump;
+
+		constante <= "000000000" & instruction(10 downto 4) when uc_en = '1' else "0000000000000000";
+		constante_s <= constante;
+
+		erro_op <= '0' when (nop_m or jump_m or blr_m or mov_m or add_m or sub_m or cmp_m or st_m or ld_m) = '1' else '1';
+		erro_op_s <= erro_op;
 end architecture;

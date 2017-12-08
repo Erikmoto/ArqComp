@@ -15,15 +15,16 @@ architecture a_processador_tb of processador_tb is
 	component processador
     port(
       top_out	  : out unsigned (14 downto 0);
-      clk, rst, pc_en : in std_logic
+      clk, rst, pc_en : in std_logic;
+			erro: out std_logic
     );
 	end component;
 
 	signal top_out  : unsigned (14 downto 0);
-  signal clk, rst, pc_en  : std_logic;
+  signal clk, rst, pc_en, erro  : std_logic;
 
 	begin
-	uut:processador port map(top_out => top_out, clk => clk, rst => rst, pc_en => pc_en);
+	uut: processador port map(top_out => top_out, clk => clk, rst => rst, pc_en => pc_en, erro => erro);
 
 	process
   	begin

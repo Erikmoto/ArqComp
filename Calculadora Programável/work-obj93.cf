@@ -1,28 +1,28 @@
 v 4
-file . "maq_estados.vhd" "d307b90f1f66ed7fa726493a65add6291c6b87e1" "20171206182932.042":
-  entity maq_estados at 7( 147) + 0 on 109;
-  architecture a_maq_estados of maq_estados at 19( 326) + 0 on 110;
-file . "processador.vhd" "4a345264c98e15d974b11aa561b302aa95ce2f8e" "20171206182938.662":
-  entity processador at 8( 148) + 0 on 121;
-  architecture a_processador of processador at 19( 339) + 0 on 122;
-file . "uc.vhd" "e7538028c83fd029fe448d921bd7819617590820" "20171206182936.434":
-  entity uc at 7( 143) + 0 on 117;
-  architecture a_uc of uc at 30( 621) + 0 on 118;
-file . "pc.vhd" "bfaa283b3b1492b2785be4791add5b9d098ad03d" "20171206182934.436":
-  entity pc at 7( 138) + 0 on 113;
-  architecture a_pc of pc at 21( 399) + 0 on 114;
-file . "rom.vhd" "c1088ba0733cff42a6896eeb22ebaabc678465eb" "20171206182935.485":
-  entity rom at 7( 139) + 0 on 115;
-  architecture a_rom of rom at 19( 347) + 0 on 116;
-file . "ula_16bits.vhd" "b3feea1d95842b0075feeeab620c25097a1b666b" "20171206182937.523":
-  entity ula_16bits at 7( 155) + 0 on 119;
-  architecture a_ula_16bits of ula_16bits at 21( 547) + 0 on 120;
-file . "banco_reg_16bits.vhd" "da9a4c2c85401eb2f6a4f3dd1e36b26095fc9fb5" "20171206182930.115":
-  entity banco_reg_16bits at 7( 152) + 0 on 107;
-  architecture a_banco_reg_16bits of banco_reg_16bits at 25( 800) + 0 on 108;
-file . "mux_16bits.vhd" "bc6516d4e2e8450e8689226de94395992e63c21e" "20171206182933.138":
-  entity mux_16bits at 8( 140) + 0 on 111;
-  architecture a_mux_16bits of mux_16bits at 24( 403) + 0 on 112;
-file . "processador_tb.vhd" "8274cfde27c59f7f5e34b518bdbff9c01b362fae" "20171206182939.612":
-  entity processador_tb at 7( 151) + 0 on 123;
-  architecture a_processador_tb of processador_tb at 14( 259) + 0 on 124;
+file . "processador_tb.vhd" "25c7015839404a33e75cc0b27f196574ce351c79" "20171208000825.927":
+  entity processador_tb at 7( 151) + 0 on 221;
+  architecture a_processador_tb of processador_tb at 14( 259) + 0 on 222;
+file . "uc.vhd" "31590ffcf2f22b7d786566e27484b71de619f8b1" "20171208000820.711":
+  entity uc at 7( 143) + 0 on 215;
+  architecture a_uc of uc at 34( 761) + 0 on 216;
+file . "pc.vhd" "bfaa283b3b1492b2785be4791add5b9d098ad03d" "20171208000819.335":
+  entity pc at 7( 138) + 0 on 211;
+  architecture a_pc of pc at 21( 399) + 0 on 212;
+file . "maq_estados.vhd" "d307b90f1f66ed7fa726493a65add6291c6b87e1" "20171208000818.618":
+  entity maq_estados at 7( 147) + 0 on 207;
+  architecture a_maq_estados of maq_estados at 19( 326) + 0 on 208;
+file . "banco_reg_16bits.vhd" "da9a4c2c85401eb2f6a4f3dd1e36b26095fc9fb5" "20171208000817.870":
+  entity banco_reg_16bits at 7( 152) + 0 on 205;
+  architecture a_banco_reg_16bits of banco_reg_16bits at 25( 800) + 0 on 206;
+file . "mux_16bits.vhd" "bc6516d4e2e8450e8689226de94395992e63c21e" "20171208000818.949":
+  entity mux_16bits at 8( 140) + 0 on 209;
+  architecture a_mux_16bits of mux_16bits at 24( 403) + 0 on 210;
+file . "rom.vhd" "f6ee7c9944c8922a7858229aafd2ccd70aba1ad0" "20171208000819.736":
+  entity rom at 7( 139) + 0 on 213;
+  architecture a_rom of rom at 19( 347) + 0 on 214;
+file . "ula_16bits.vhd" "b3feea1d95842b0075feeeab620c25097a1b666b" "20171208000821.491":
+  entity ula_16bits at 7( 155) + 0 on 217;
+  architecture a_ula_16bits of ula_16bits at 21( 547) + 0 on 218;
+file . "processador.vhd" "8bf0d851906d981cfca4ef37d902cdc94c9f70e9" "20171208000822.296":
+  entity processador at 8( 155) + 0 on 219;
+  architecture a_processador of processador at 20( 381) + 0 on 220;
