@@ -54,7 +54,7 @@ ghdl -e processador_tb
 
 
 
-ghdl -r processador_tb --stop-time=5000ns --wave=processador.ghw
+ghdl -r processador_tb --stop-time=50000ns --wave=processador.ghw
 
 
 PAUSE

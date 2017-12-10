@@ -87,7 +87,7 @@ architecture a_processador of processador is
 	component ula_16bits is
 		port(	entr0, entr1									: in unsigned (15 downto 0);
 				sel0											: in unsigned (1 downto 0);
-				soma, subtrai, select_maior, modulo_adicao 		: inout unsigned (15 downto 0);
+				soma, subtrai, select_maior, modulo_adicao 		: out unsigned (15 downto 0);
 				saida											: out unsigned(15 downto 0);
 				compara											: out std_logic;
 				carry: out std_logic
@@ -149,8 +149,9 @@ architecture a_processador of processador is
 		-- Atualização do PC: adiciona 1 quando não é jump ou é nop, recebe o endereço de destino quando é jump
 		pc_in <= 	"0000000000000000" when estado = "00" and rst = '1' else
 							destino_jump when estado = "00" and jump_en = '1' else -- Jump incondicional
-							pc_out + destino_jump when estado = "00" and blr_en = '1' and carry = '0' else -- Branch para frente
-							pc_out - destino_jump when estado = "00" and blr_en = '1' and carry = '1' else -- Branch para trás
+							pc_out + destino_jump when estado = "00" and blr_en = '1' else -- Branch
+							pc_out + "0000000000000010" when estado = "00" and cmp_en = '1' and compara = '0' else
+							pc_out + "0000000000000001" when estado = "00" and cmp_en = '1' and compara = '1' else
 							pc_out + "0000000000000001" when estado = "00" and erro_op = '0' else pc_in;
 
 		erro <= erro_op; -- Serve para verificar opcodes inválidos e se algum tipo de instrução está ativo
@@ -174,7 +175,7 @@ architecture a_processador of processador is
 
 		-- Seleção de operação da ULA
 		ula_sel <= "00" when estado = "10" and (add_en or mov_en) = '1' else
-								"01" when estado = "10" and sub_en = '1' or (blr_en = '1' and carry = '0') else ula_sel;
+								"01" when estado = "10" and sub_en = '1' else ula_sel;
 
 		-- Seleção dos registradores fonte e destino
 		selec_reg1 <= reg_fonte when estado = "10" else selec_reg1;

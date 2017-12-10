@@ -103,11 +103,11 @@ architecture a_uc of uc is
 		reg_dest <= instruction(2 downto 0) when uc_en = '1' else "000";
 		reg_dest_s <= reg_dest;
 
-		destino_jump <= "0000000" & instruction(8 downto 0) when uc_en = '1' and instruction(8) = '0' else 
-						"1111111" & instruction(8 downto 0) when uc_en = '1' and instruction(8) = '1' else "0000000000000000";
+		destino_jump <= "0000000" & instruction(8 downto 0) when uc_en = '1' and instruction(8) = '0' else
+										"1111111" & instruction(8 downto 0) when uc_en = '1' and instruction(8) = '1' else "0000000000000000";
 		destino_jump_s <= destino_jump;
 
-		constante <= "000000000" & instruction(10 downto 4) when uc_en = '1' else "0000000000000000";
+		constante <= "000000000" & instruction(10 downto 4) when uc_en = '1' and (add_m or sub_m or cmp_m or mov_m) = '1' else "0000000000000000";
 		constante_s <= constante;
 
 		erro_op <= '0' when (nop_m or jump_m or blr_m or mov_m or add_m or sub_m or cmp_m or st_m or ld_m) = '1' else '1';
