@@ -11,7 +11,7 @@ use ieee.numeric_std.all;
 
 entity processador is
 	port(
-		top_out	  : out unsigned (14 downto 0);
+		top_out	  : out unsigned (15 downto 0);
 		clk, rst, pc_en : in std_logic;
 		erro: out std_logic
 	);
@@ -167,7 +167,6 @@ architecture a_processador of processador is
 		uc_en <= '1' when estado = "01" else uc_en;
 
 		uc_in <= instrucao when estado = "01" else uc_in;
-		top_out <= uc_in;
 
 		-------------------------------------------------------------------------
 		-------------------------------- Execute --------------------------------
@@ -176,16 +175,21 @@ architecture a_processador of processador is
 		mux_in <= constante when estado = "10" else mux_in;
 
 		-- Seletor do MUX: Registro (Flag = 0) ou Constante (Flag = 1)
-		mux_sel <= 	flag when estado = "10" and st_en = '0' else
-								'1' when estado = "10" and st_en = '1' else mux_sel;
+		mux_sel <= 	'1' when estado = "10" and (st_en or ld_en or mov_en) = '1' else
+								flag when estado = "10" and st_en = '0' and ld_en = '0' and mov_en = '0' else mux_sel;
 
 		-- Seleção de operação da ULA
-		ula_sel <= "00" when estado = "10" and (add_en or mov_en) = '1' else
-								"01" when estado = "10" and sub_en = '1' else ula_sel;
+		ula_sel <= 	"00" when estado = "10" and add_en = '1' else
+								"01" when estado = "10" and sub_en = '1' else
+								"10" when estado = "10" and mov_en = '1' else ula_sel;
 
 		-- Seleção dos registradores fonte, destino e de escrita
-		selec_reg1 <= reg_fonte when estado = "10" else selec_reg1;
-		selec_reg2 <= reg_dest when estado = "10" else selec_reg2;
+		selec_reg1 <= reg_fonte when estado = "10" and mov_en = '0' else
+									reg_dest when estado = "10" and mov_en = '1' else selec_reg1;
+
+		selec_reg2 <= reg_dest when estado = "10" and mov_en = '0' else
+									reg_fonte when estado = "10" and mov_en = '1' else selec_reg2;
+
 		selec_esc <= 	reg_dest when estado = "10" and (add_en or sub_en or mov_en) = '1' else
 									reg_fonte when estado = "10" and ld_en = '1' else selec_esc;
 
@@ -195,4 +199,6 @@ architecture a_processador of processador is
 		-- Habilita escrita na RAM
 		ram_wr_en <= '1' when estado = "10" and st_en = '1' else '0';
 		ram_ou_ula <= '0' when estado = "10" and (st_en or ld_en) = '1' else '1';
+
+		top_out <= ram_out when estado = "10" and ld_en = '1' and selec_esc = "111";
 end architecture;

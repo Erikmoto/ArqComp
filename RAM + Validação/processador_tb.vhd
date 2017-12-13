@@ -14,13 +14,13 @@ end;
 architecture a_processador_tb of processador_tb is
 	component processador
     port(
-      top_out	  : out unsigned (14 downto 0);
+      top_out	  : out unsigned (15 downto 0);
       clk, rst, pc_en : in std_logic;
 			erro: out std_logic
     );
 	end component;
 
-	signal top_out  : unsigned (14 downto 0);
+	signal top_out  : unsigned (15 downto 0);
   signal clk, rst, pc_en, erro  : std_logic;
 
 	begin
